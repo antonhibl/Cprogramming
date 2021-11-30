@@ -4,16 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <stdbool.h>
 
 // Macro Definitions
 #define BYTE_SIZE 16
-#define BOOL_HIGH 1
-#define BOOL_LOW 0
 
 // Data Implementations
 struct node{
-	int node_data;
+	_Bool node_data;
 
 	struct node *nextNode;
 };
@@ -29,7 +26,7 @@ struct node{
 	Device Output: none
 	Dependencies: rand()
 */
-int getRandBool();
+_Bool getRandBool();
 
 /*
 	Name: generateByte
@@ -77,7 +74,7 @@ void printByte(struct node *headNode);
 	Device Output: none
 	Dependencies: free()
 */
-bool clearByte(struct node *headNode);
+_Bool clearByte(struct node *headNode);
 
 /*
 	Name: bitToDecimal
@@ -89,4 +86,4 @@ bool clearByte(struct node *headNode);
 	Device Output: none
 	Dependencies: powf() 
 */
-int bitToDecimal(int node_data, float N);
+int bitToDecimal(_Bool node_data, float N);

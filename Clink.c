@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include "Clink.h"
 #include <unistd.h>
-#include <stdbool.h>
 #include <math.h>
 
 // Main program
@@ -89,11 +88,11 @@ int main( int argc, char *argv[] )
     return 0;
 }
 
-int getRandBool()
+_Bool getRandBool()
 {
     // return the pseudo-random value
       // functions: rand()
-    return (rand() % (BOOL_HIGH - BOOL_LOW + 1));
+    return (_Bool)(rand()% (2));
 }
 
 struct node *generateByte(struct node *headNode)
@@ -163,6 +162,8 @@ void printByte(struct node *headNode)
     register struct node *byte_addr = headNode;
       // byte value initialized to 0
     register int byte_val = 0;
+	  // whole byte size
+	register int wholeByte = 0;
     
     // increment the byte count
     byte_count++;
@@ -174,6 +175,9 @@ void printByte(struct node *headNode)
     // loop through byte
     for(counter=0;counter<BYTE_SIZE;counter++)
     {
+		// Increase byte size
+		  // function: sizeof()
+		wholeByte += sizeof(struct node);
         // add to byte value
           // function: bitToDecimal()
         byte_val += bitToDecimal(headNode->node_data, rev_count);
@@ -191,23 +195,26 @@ void printByte(struct node *headNode)
     printf("\n\nthe bytes value is: %d\n", byte_val);
     // Print the byte's base address
       // function: printf()
-    printf("the bytes base address is: %p", byte_addr);
+    printf("the bytes base address is: %p\n", byte_addr);
+	// Print the byte's size
+	  // function: printf()
+	printf("the size of the byte is: %d", wholeByte);
 }
 
-int bitToDecimal(int node_data, float N)
+int bitToDecimal(_Bool node_data, float N)
 {
     // calculate & return decimal value with Nth little-endian ordination
       // function: powf()
-    return (int)((node_data) * powf(2.0, N));
+    return (int)((int)(node_data) * powf(2.0, N));
 }
 
-bool clearByte(struct node *headNode)
+_Bool clearByte(struct node *headNode)
 {
     // Initialize local variables
       // loop counter
     register int counter;
-      // boolean success flag initialized to false
-    register bool success = false;
+      // _Boolean success flag initialized to false
+    register _Bool success = 0;
       // temporary node variable
     register struct node *tempNode;
 
@@ -225,7 +232,7 @@ bool clearByte(struct node *headNode)
         free(tempNode);
 
         // set success
-        success = true;
+        success = 1;
     }
     // return the success
     return success;
