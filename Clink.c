@@ -8,6 +8,9 @@
 #include <unistd.h>
 #include <math.h>
 
+// Macros
+#define PRIME 10006660001
+
 // Main program
 int main( int argc, char *argv[] )
 {
@@ -30,12 +33,19 @@ int main( int argc, char *argv[] )
         // check if number of bytes to generate is greater than 0
         if(numBytes > 0)
         {
+            // set the initial seed
+              // function: time()
+            register time_t seed = time(NULL);
+            
             // loop to number of bytes
             for(counter = 0;counter<numBytes;counter++)
             {
-                // seed random
-                  // function: srand(), time()
-                srand(time(NULL));
+                // seed the generator
+                  // function: srand()
+                srand(seed);
+
+                // adapt the seed
+                seed = (time_t)(((unsigned long)seed * PRIME) + 8191);
 
                 // Allocate the head node
                   // function: malloc(), sizeof()
@@ -56,7 +66,7 @@ int main( int argc, char *argv[] )
 
                 // Wait to gaurantee entropy
                   // function: sleep()
-                sleep(1);
+                //sleep(1);
 
                 // If byte clears
                   // clearByte()
@@ -162,8 +172,8 @@ void printByte(struct node *headNode)
     register struct node *byte_addr = headNode;
       // byte value initialized to 0
     register int byte_val = 0;
-	  // whole byte size
-	register int wholeByte = 0;
+      // whole byte size
+    register int wholeByte = 0;
     
     // increment the byte count
     byte_count++;
@@ -175,9 +185,9 @@ void printByte(struct node *headNode)
     // loop through byte
     for(counter=0;counter<BYTE_SIZE;counter++)
     {
-		// Increase byte size
-		  // function: sizeof()
-		wholeByte += sizeof(struct node);
+        // Increase byte size
+          // function: sizeof()
+        wholeByte += sizeof(struct node);
         // add to byte value
           // function: bitToDecimal()
         byte_val += bitToDecimal(headNode->node_data, rev_count);
@@ -196,9 +206,9 @@ void printByte(struct node *headNode)
     // Print the byte's base address
       // function: printf()
     printf("the bytes base address is: %p\n", byte_addr);
-	// Print the byte's size
-	  // function: printf()
-	printf("the size of the byte is: %d", wholeByte);
+    // Print the byte's size
+      // function: printf()
+    printf("the size of the byte is: %d", wholeByte);
 }
 
 int bitToDecimal(_Bool node_data, float N)
